@@ -1,0 +1,10 @@
+button:focus,
+input:focus,
+select:focus,
+textarea:focus,
+.page-item a{
+    box-shadow: none !important;
+}
+.min-vh-100 {
+    min-height: 100%;
+}
