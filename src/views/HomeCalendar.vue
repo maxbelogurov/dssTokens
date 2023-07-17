@@ -1,10 +1,14 @@
 <template>
-  <div class="col-12">
+  <div class="col-12 ">
     <div class="my-3 p-2 bg-white rounded rounded-3 ">
-      <p>Calendar template</p>
-      <Calendar
-          :columns="2"
-          :attributes='tokens' />
+      <div class="row">
+        <div class="col-md-3 py-5">
+          <Calendar
+              expanded
+              :columns="columns"
+              :attributes='tokens' />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -14,6 +18,9 @@ import {mapGetters} from 'vuex'
 import { Calendar } from 'v-calendar';
 import 'v-calendar/style.css';
 import { ref, computed } from 'vue';
+import { useScreens } from 'vue-screen-utils';
+
+
 export default {
   name: "HomeCalendar",
   components: { Calendar },
@@ -34,7 +41,7 @@ export default {
           },
         },
       ],
-      // date: undefined,
+      columns: undefined,
     };
   },
   computed: {
@@ -43,12 +50,8 @@ export default {
     ]),
   },
   mounted() {
-    // this.date = ref([
-    //   {
-    //     highlight: true,
-    //     dates: new Date(),
-    //   },
-    // ]);
+    const { mapCurrent } = useScreens({ xs: '0px', sm: '640px', md: '768px', lg: '1024px' });
+    this.columns = mapCurrent({ md: 2, lg: 2 }, 1);
   }
 }
 </script>
