@@ -1,0 +1,9 @@
+body {
+  min-height: 100vh !important;
+}
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: none !important;
+}
