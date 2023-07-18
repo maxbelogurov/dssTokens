@@ -26,21 +26,7 @@ export default {
   components: { Calendar },
   data() {
     return {
-      tokens: [
-        {
-          key: 'today',
-          highlight: 'blue',
-          dates: new Date(),
-        },
-        {
-          key: '123',
-          highlight: 'red',
-          dates: new Date('2023-08-20T19:55:56+00:00'),
-          popover: {
-            label:'Дорспецсервис',
-          },
-        },
-      ],
+      tokens: [],
       columns: undefined,
     };
   },
@@ -49,9 +35,34 @@ export default {
       'TOKENS',
     ]),
   },
+  methods: {
+    setTokensToCalendar() {
+      // set today
+      this.tokens.push({
+        key: 'today',
+        highlight: 'blue',
+        dates: new Date(),
+      })
+      //set tokens
+      this.TOKENS.forEach((e) => {
+        if(!e.archived) {
+          let newDate = {
+            key: e.key_id,
+            highlight: 'red',
+            dates: new Date(e.date_end),
+            popover: {
+              label: e.company_name
+            }
+          }
+          this.tokens.push(newDate)
+        }
+      })
+    }
+  },
   mounted() {
     const { mapCurrent } = useScreens({ xs: '0px', sm: '640px', md: '768px', lg: '1024px' });
     this.columns = mapCurrent({ md: 2, lg: 2 }, 1);
+    this.setTokensToCalendar();
   }
 }
 </script>
