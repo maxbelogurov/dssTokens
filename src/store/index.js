@@ -2,7 +2,6 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    homeTemplate: 'table',
     tokens: [
       {
         company_name: 'Дорспецстрой',
@@ -28,18 +27,11 @@ export default createStore({
     ]
   },
   getters: {
-    HOME_TEMPLATE(state) {return state.homeTemplate},
     TOKENS(state) {return state.tokens}
   },
   mutations: {
-    setTemplate (state, payload) {
-      state.homeTemplate = payload
-    },
   },
   actions: {
-    changeTemplate ({commit}, payload) {
-      commit('setTemplate', payload)
-    },
   },
   modules: {
   }

@@ -1,15 +1,19 @@
 <template>
   <div class="container-fluid bg-secondary bg-gradient min-vh-100">
     <my-header></my-header>
-    <div v-if="this.HOME_TEMPLATE === 'table'" class="row">
+    <div class="row">
       <my-home-table></my-home-table>
-    </div>
-    <div v-else-if="this.HOME_TEMPLATE === 'calendar'" class="row">
       <my-home-calendar></my-home-calendar>
     </div>
-    <div v-else class="row">
-      <p>Ошибка</p>
-    </div>
+<!--    <div v-if="this.HOME_TEMPLATE === 'table'" class="row">-->
+<!--      <my-home-table></my-home-table>-->
+<!--    </div>-->
+<!--    <div v-else-if="this.HOME_TEMPLATE === 'calendar'" class="row">-->
+<!--      <my-home-calendar></my-home-calendar>-->
+<!--    </div>-->
+<!--    <div v-else class="row">-->
+<!--      <p>Ошибка</p>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -24,7 +28,7 @@ export default {
   components: {MyHeader, MyHomeTable, MyHomeCalendar},
   computed: {
     ...mapGetters([
-      'HOME_TEMPLATE',
+
     ]),
   },
   methods: {

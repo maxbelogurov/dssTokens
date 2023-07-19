@@ -1,5 +1,5 @@
 <template>
-  <div class="col-12">
+  <div class="col-12 col-md-12 col-lg-8 col-xl-9">
     <div class="my-3 p-2 bg-white rounded rounded-3 ">
       <div class="table-responsive">
         <table class="table">

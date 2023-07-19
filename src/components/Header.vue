@@ -8,14 +8,6 @@
         <div class="me-2">
           <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddToken">Add</button>
         </div>
-        <div class="btn-group btn-group-sm" role="group" aria-label="FormatData">
-          <button @click="changeTemplate('table')"
-                  :class="HOME_TEMPLATE === 'table' ? 'active' : ''"
-                  type="button" class="btn btn-light">Table</button>
-          <button @click="changeTemplate('calendar')"
-                  :class="HOME_TEMPLATE === 'calendar' ? 'active' : ''"
-                  type="button" class="btn btn-light">Calendar</button>
-        </div>
       </div>
     </div>
     <my-add-token></my-add-token>
@@ -34,9 +26,6 @@ export default {
     ]),
   },
   methods: {
-    changeTemplate(value) {
-      this.$store.dispatch('changeTemplate', value)
-    }
   },
 }
 </script>
