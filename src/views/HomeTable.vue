@@ -19,7 +19,11 @@
               <span v-show="token.key_fns" class="badge bg-primary">fns</span>
             </td>
             <td>{{token.company_name}}</td>
-            <td>{{token.user}}</td>
+            <td>
+              <span v-for="user in token.user">
+                {{user}}
+              </span>
+            </td>
             <td>{{friendlyTime(token.date_end)}}</td>
             <td>
               <progress-line v-bind:dateEnd="token.date_end"></progress-line>

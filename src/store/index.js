@@ -1,37 +1,38 @@
 import { createStore } from 'vuex'
+import axios from "axios";
+const config = require('@/config')
 
 export default createStore({
   state: {
-    tokens: [
-      {
-        company_name: 'Дорспецстрой',
-        company_user: 'Мнацаканов Эдуард',
-        user: 'Аня',
-        key_id: '87lk12398dan',
-        key_fns: true,
-        archived: false,
-        date_start: '2022-05-11T19:55:56+00:00',
-        date_end: '2023-08-20T19:55:56+00:00',
-        description: 'test token'
-      }, {
-        company_name: 'Мосинжиниринг',
-        company_user: 'Мнацаканов Геогрий',
-        user: 'Каролина',
-        key_id: '12lk32357sty',
-        key_fns: false,
-        archived: false,
-        date_start: '2022-11-10T19:55:56+00:00',
-        date_end: '2024-02-09T19:55:56+00:00',
-        description: 'test token 2'
-      },
-    ]
+    tokens: []
   },
   getters: {
     TOKENS(state) {return state.tokens}
   },
   mutations: {
+    setTokens(state, tokens) {state.tokens = tokens}
   },
   actions: {
+    getTokens({ state, commit }) {
+      let axiosHeader = { headers: {"Authorization": config.authToken} }
+      axios.get(`${config.ycUrl}/keys`, axiosHeader)
+          .then(response => {
+            commit('setTokens', response.data.keys)
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    },
+    addToken({commit}, token) {
+      let axiosHeader = { headers: {"Authorization": config.authToken} }
+      axios.post(`${config.ycUrl}/keys`, token, axiosHeader)
+          .then(response => {
+            console.log(response.data)
+          })
+          .catch(error => {
+            console.log(error);
+          })
+    }
   },
   modules: {
   }

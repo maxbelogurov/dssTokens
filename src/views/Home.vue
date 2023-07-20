@@ -37,5 +37,8 @@ export default {
     return {
     }
   },
+  created() {
+    // this.$store.dispatch('getTokens');
+  }
 }
 </script>
