@@ -48,8 +48,10 @@ export default {
       })
     }
   },
-  mounted() {
-    this.setTokensToCalendar();
+  watch: {
+    'TOKENS'() {
+      this.setTokensToCalendar();
+    }
   }
 }
 </script>

@@ -10,29 +10,32 @@
           <div class="row">
             <div class="mb-3 col-6">
               <label for="tokenId" class="form-label small">Token id</label>
-              <input v-model="token.key_id" type="text" class="form-control" id="tokenId">
+              <input v-model="token.key_id" type="text" class="form-control form-control-sm" id="tokenId">
             </div>
             <div class="mb-3 col-6">
               <label for="tokenDescription" class="form-label small">Description</label>
-              <input v-model="token.description" type="text" class="form-control" id="tokenDescription">
+              <input v-model="token.description" type="text" class="form-control form-control-sm" id="tokenDescription">
             </div>
           </div>
           <div class="row">
             <div class="mb-3 col-6">
               <label for="tokenCompany" class="form-label small">Company</label>
-              <input v-model="token.company_name" type="text" class="form-control" id="tokenCompany">
+              <input v-model="token.company_name" type="text" class="form-control form-control-sm" id="tokenCompany">
             </div>
             <div class="mb-3 col-6">
               <label for="tokenCompanyManager" class="form-label small">Manager</label>
-              <input v-model="token.company_user" type="text" class="form-control" id="tokenCompanyManager">
+              <input v-model="token.company_user" type="text" class="form-control form-control-sm" id="tokenCompanyManager">
             </div>
           </div>
           <div class="mb-3">
-            <label for="tokenUser" class="form-label small">Users</label>
-            <div class="w-auto">
-              <input v-model="token.user[0]" type="text" class="form-control" id="tokenUser" placeholder="User">
+            <label for="tokenUser1" class="form-label small">Users</label>
+            <button @click="this.usersCount++" type="button" class="btn btn-sm btn-info ms-2 px-1" style="line-height: 0.8em">add</button>
+            <button v-if="this.usersCount > 1" @click="this.usersCount--" type="button" class="btn btn-sm btn-warning ms-2 px-1" style="line-height: 0.8em">remove</button>
+            <div class="d-flex gap-1">
+              <div v-for="inputUser in usersCount" class="position-relative">
+                <input v-model="token.user[inputUser - 1]" type="text" class="form-control form-control-sm" :id="`tokenUser${inputUser}`" placeholder="User">
+              </div>
             </div>
-
           </div>
           <div class="row">
             <div class="mb-3 col-6">
@@ -52,11 +55,6 @@
               </DatePicker>
             </div>
           </div>
-
-<!--            <input v-model="token.date_start" type="text" class="form-control" id="tokenDateStart" placeholder="Date start">-->
-<!--            <input v-model="token.date_end" type="text" class="form-control" id="tokenDateEnd" placeholder="Date end">-->
-
-<!--          </div>-->
           <div class="form-check form-switch mb-3">
             <input v-model="token.key_fns" class="form-check-input" type="checkbox" role="switch" id="tokenFNS" checked>
             <label class="form-check-label" for="tokenActive">Published FNS</label>
@@ -89,6 +87,7 @@ export default {
         highlight: 'gray',
         dates: new Date(),
       }],
+      usersCount: 1,
       token: {
         key_id: '',
         company_name: '',
@@ -111,7 +110,10 @@ export default {
       data.date_end = this.token.date_end.toISOString().slice(0, 10)
       console.log(data)
       this.$store.dispatch('addToken', data);
-    }
+    },
+    addUser() {
+      this.usersCount++
+    },
   },
   created() {
     // this.token.date_start = ref(new Date())

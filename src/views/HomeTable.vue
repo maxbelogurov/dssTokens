@@ -15,13 +15,21 @@
           <tbody>
           <tr v-for="token in this.TOKENS" class="align-middle">
             <td>
+              <button @click="removeToken(token.key_id)" class="btn btn-outline-danger btn-sm px-1" style="line-height: 0.8rem">
+                <svg width="1rem" height="1rem" fill="currentColor">
+                  <use xlink:href="@/assets/ico/bootstrap-icons.svg#trash"/>
+                </svg>
+              </button>
               {{token.key_id}}
               <span v-show="token.key_fns" class="badge bg-primary">fns</span>
             </td>
-            <td>{{token.company_name}}</td>
             <td>
-              <span v-for="user in token.user">
+              {{token.company_name}}
+            </td>
+            <td>
+              <span v-for="(user, index) in token.user">
                 {{user}}
+                <span v-if="index < token.user.length - 1">, </span>
               </span>
             </td>
             <td>{{friendlyTime(token.date_end)}}</td>
@@ -79,23 +87,9 @@ export default {
       };
       return date.toLocaleString("ru", options)
     },
-    // daysLeft(end) {
-    //   const oneDay = 1000 * 60 * 60 * 24 // one day in milliseconds
-    //   let today = new Date()
-    //   let endDate = new Date(end)
-    //   let msLeft = endDate.getTime() - today.getTime()
-    //   return Math.trunc(msLeft/oneDay)
-    // },
-    // percentDaysLeft(d) {
-    //   let percent = Math.trunc(d * 0.2739)
-    //   if (percent > 100) {
-    //     return 100
-    //   } else if (percent < 0) {
-    //     return 0
-    //   } else {
-    //     return percent
-    //   }
-    // }
+    removeToken(id) {
+      this.$store.dispatch('removeToken', id);
+    }
   }
 }
 </script>
