@@ -1,30 +1,44 @@
 import {createStore} from 'vuex'
 import axios from "axios";
+import router from "@/router";
 
 const config = require('@/config')
 
 export default createStore({
   state: {
+    authToken: '',
     tokens: [],
     tokensLoading: false,
   },
   getters: {
-    TOKENS(state) {
-      return state.tokens
-    },
-    TOKENS_LOADING(state) {
-      return state.tokensLoading
-    },
+    AUTH_TOKEN(state) { return state.authToken },
+    TOKENS(state) { return state.tokens },
+    TOKENS_LOADING(state) { return state.tokensLoading },
   },
   mutations: {
-    setTokens(state, tokens) {
-      state.tokens = tokens
-    }
+    setAuthToken(state, authToken) { state.authToken = authToken },
+    setTokens(state, tokens) { state.tokens = tokens }
   },
   actions: {
+    // Authentication
+    writeAuthToken({commit}, userToken) {
+      localStorage.setItem('authToken', userToken)
+      commit('setAuthToken', userToken)
+    },
+    checkAuthToken({commit}) {
+      let token = localStorage.getItem('authToken')
+      if (token) {
+        commit('setAuthToken', token)
+      }
+    },
+    clearAuthToken({commit}) {
+      localStorage.removeItem('authToken')
+      commit('setAuthToken', '')
+    },
+    // DSS Tokens
     getTokens({state, commit}) {
       state.tokensLoading = true
-      let axiosHeader = {headers: {"Authorization": config.authToken}}
+      let axiosHeader = {headers: {"Authorization": state.authToken}}
       axios.get(`${config.ycUrl}/keys`, axiosHeader)
         .then(response => {
           state.tokensLoading = false
@@ -33,6 +47,8 @@ export default createStore({
         .catch(error => {
           state.tokensLoading = false
           console.log(error);
+          this.dispatch('clearAuthToken')
+          router.push('/signin')
         })
     },
     addToken({commit}, token) {

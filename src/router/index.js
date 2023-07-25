@@ -6,7 +6,7 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
   },
   {
     path: '/signin',
@@ -18,12 +18,9 @@ const routes = [
     name: 'PageNotFound',
     component: () => import('@/views/PageNotFound')
   }
-
 ]
-
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
 export default router

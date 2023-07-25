@@ -7,9 +7,12 @@
           <span class="visually-hidden">Loading...</span>
         </div>
       </div>
-      <div class="d-flex ">
+      <div class="d-flex">
         <div class="me-2">
           <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddToken">Add</button>
+        </div>
+        <div class="me-2">
+          <button @click="exit" type="button" class="btn btn-dark btn-sm">Exit</button>
         </div>
       </div>
     </div>
@@ -20,6 +23,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import MyAddToken from '@/components/ModalAddToken'
+import router from "@/router";
 export default {
   name: "Header",
   components: {MyAddToken},
@@ -29,6 +33,10 @@ export default {
     ]),
   },
   methods: {
+    exit() {
+      this.$store.dispatch('clearAuthToken');
+      router.push('/signin')
+    }
   },
 }
 </script>
