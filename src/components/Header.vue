@@ -12,6 +12,9 @@
           <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddToken">Add</button>
         </div>
         <div class="me-2">
+          <button @click="reload" type="button" class="btn btn-warning btn-sm">Reload</button>
+        </div>
+        <div class="me-2">
           <button @click="exit" type="button" class="btn btn-dark btn-sm">Exit</button>
         </div>
       </div>
@@ -33,6 +36,9 @@ export default {
     ]),
   },
   methods: {
+    reload() {
+      this.$store.dispatch('getTokens');
+    },
     exit() {
       this.$store.dispatch('clearAuthToken');
       router.push('/signin')
