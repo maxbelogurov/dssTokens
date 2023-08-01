@@ -9,6 +9,7 @@ export default createStore({
     authToken: '',
     tokens: [],
     tokensLoading: false,
+    tokenCreating: false,
   },
   getters: {
     AUTH_TOKEN(state) { return state.authToken },
@@ -51,19 +52,20 @@ export default createStore({
           router.push('/signin')
         })
     },
-    addToken({commit}, token) {
-      let axiosHeader = {headers: {"Authorization": config.authToken}}
-      axios.post(`${config.ycUrl}/keys`, token, axiosHeader)
+    async addToken({state, commit}, token) {
+      let axiosHeader = {headers: {"Authorization": state.authToken}}
+      return await axios.post(`${config.ycUrl}/keys`, token, axiosHeader)
         .then(response => {
           this.dispatch('getTokens')
-          console.log(response.data)
+          return true
         })
         .catch(error => {
           console.log(error);
+          return false
         })
     },
-    removeToken({commit}, id) {
-      let axiosHeader = {headers: {"Authorization": config.authToken}}
+    removeToken({state, commit}, id) {
+      let axiosHeader = {headers: {"Authorization": state.authToken}}
       axios.delete(`${config.ycUrl}/keys/${id}`, axiosHeader)
         .then(response => {
           this.dispatch('getTokens')

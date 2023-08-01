@@ -102,18 +102,41 @@ export default {
       },
     }
   },
+  computed: {
+
+  },
   methods: {
     addToken() {
       let data = {}
       Object.assign(data, this.token)
       data.date_start = this.token.date_start.toISOString().slice(0, 10)
       data.date_end = this.token.date_end.toISOString().slice(0, 10)
-      console.log(data)
-      this.$store.dispatch('addToken', data);
+      let store = this.$store
+      let clearToken = this.clearToken()
+      async function addingToken() {
+        const response = await store.dispatch('addToken', data)
+        response ? clearToken : console.log(response)
+      }
+      addingToken()
     },
     addUser() {
       this.usersCount++
     },
+    clearToken() {
+      let token = {
+        key_id: '',
+        company_name: '',
+        company_user: '',
+        user: [],
+        date_start: null,
+        date_end: null,
+        description: '',
+        key_fns: true,
+        archived: false,
+        settings: {}
+      };
+      this.token = token
+    }
   },
   created() {
     // this.token.date_start = ref(new Date())
